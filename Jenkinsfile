@@ -3,6 +3,9 @@
 
 pipeline {
     agent any
+    environment {
+        registry = "670855725719.dkr.ecr.ap-south-1.amazonaws.com/kaushik-ecr"
+    }
     
     stages {
         stage('Git Checkout') {
@@ -48,5 +51,12 @@ pipeline {
                }
             }
         }
+        stage('Building image') {
+            steps {
+               script {
+                   dockerImage = docker.build("${registry}")
+             }
+          }
+       }
     }
 }
